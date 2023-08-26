@@ -1,12 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // functional component for screen
 const HomeScreen = ({ navigation }) => {
 
+  //TODO: add useEffect() hook
+
+  // read from AsyncStorage
+  //const items = await AsyncStorage.getAllKeys();
+  //console.log(items);
+
   // button tap handler
-  const handleButtonPress = () => {
+  const handleButtonPress = async () => {
+
+    console.log('>>> navigate Add Task screen');
     navigation.navigate('Add Task');
   }
 

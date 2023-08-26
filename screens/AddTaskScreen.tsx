@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // functional component for screen
 const AddTaskScreen = ({ navigation }) => {
 
   // button tap handler
   const handleButtonPress = () => {
-    //TODO: add save to db/store
+    // saving to local storage
+    //AsyncStorage.setItem('Artur', 'Vika');
+
+    console.log('>>> navigate back to Home screen');
     navigation.navigate('Task List');
   }
 
