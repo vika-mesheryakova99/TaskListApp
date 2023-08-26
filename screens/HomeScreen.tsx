@@ -1,27 +1,30 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import CustomButton from '../components/CustomButton';
 
+// functional component for screen
 const HomeScreen = ({ navigation }) => {
 
+  // button tap handler
+  const handleButtonPress = () => {
+    navigation.navigate('Add Task');
+  }
+
+  // render function
   return (
-    <View>
-      <Text>Task List</Text>
-      <Button
-        title="Create Task"
-        onPress={() => navigation.navigate('AddTask')}
-      />
+    <View style={styles.container}>
+      <CustomButton text='Add Task' onPress={handleButtonPress} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    someStyle: {
-        backgroundColor: 'blue', // Change the background color
-        color: 'white', // Change the text color
-        fontSize: 18, // Change the font size
-        padding: 10, // Add padding
-        borderRadius: 5, // Apply border radius
-    },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    borderColor: 'black',
+    backgroundColor: 'pink',
+  },
 });
 
 export default HomeScreen;

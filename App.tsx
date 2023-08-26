@@ -11,8 +11,8 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="AddTask" component={AddTaskScreen} />
+        <Stack.Screen name="Task List" component={HomeScreen} />
+        <Stack.Screen name="Add Task" component={AddTaskScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
