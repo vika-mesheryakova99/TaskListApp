@@ -11,15 +11,18 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     console.log('<<< Home screen before loading >>>');
     fetchDataFromAsyncStorage();
-  }, [tasks]); //TODO: check re-rendering every second
+  }, []); //TODO: check re-rendering every second
 
   // read from AsyncStorage db
   const fetchDataFromAsyncStorage = async () => {
+    console.info('********');
     try {
       //await AsyncStorage.clear();
-      console.log(await AsyncStorage.getAllKeys());
+      //console.log(await AsyncStorage.getAllKeys());
       const storedData = await AsyncStorage.getAllKeys();
       if (storedData !== null) {
+        //const parsedTodos = JSON.parse(storedData);
+        console.info(storedData);
         setTasks(storedData);
       }
     } catch (error) {

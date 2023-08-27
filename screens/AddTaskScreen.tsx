@@ -21,9 +21,14 @@ const AddTaskScreen = ({ navigation }) => {
   };
 
   // 'Save' button tap
-  const handleSaveNewTask = () => {
+  const handleSaveNewTask = async () => {
+    if (inputText === '') {
+      return;
+    }
+
     //TODO: change 'key' to unique integer value
-    AsyncStorage.setItem(inputText, inputText);
+    await AsyncStorage.setItem(inputText, inputText);
+
     navigation.navigate('Home');
   }
 
