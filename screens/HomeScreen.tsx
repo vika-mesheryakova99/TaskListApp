@@ -16,7 +16,7 @@ const HomeScreen = ({ navigation }) => {
   const handleButtonPress = async () => {
 
     console.log('>>> navigate Add Task screen');
-    navigation.navigate('Add Task');
+    navigation.navigate('AddTask');
   }
 
   // render function

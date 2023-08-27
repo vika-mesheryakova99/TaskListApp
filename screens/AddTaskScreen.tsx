@@ -12,7 +12,7 @@ const AddTaskScreen = ({ navigation }) => {
     //AsyncStorage.setItem('Artur', 'Vika');
 
     console.log('>>> navigate back to Home screen');
-    navigation.navigate('Task List');
+    navigation.navigate('Home');
   }
 
   // render function
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTaskScreen;
+export default AddTaskScreen; 

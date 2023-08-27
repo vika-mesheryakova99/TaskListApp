@@ -11,8 +11,10 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Task List" component={HomeScreen} />
-        <Stack.Screen name="Add Task" component={AddTaskScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} 
+          options={{ title: 'Task List', headerStyle: {backgroundColor: 'pink'}}} />
+        <Stack.Screen name="AddTask" component={AddTaskScreen} 
+          options={{ title: 'Add New Task', headerStyle: {backgroundColor: 'pink'}}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
