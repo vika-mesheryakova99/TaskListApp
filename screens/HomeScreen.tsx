@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +11,7 @@ const HomeScreen = ({ navigation }) => {
   // read from AsyncStorage
   //const items = await AsyncStorage.getAllKeys();
   //console.log(items);
+
 
   // button tap handler
   const handleButtonPress = async () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,12 +6,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // functional component for screen
 const AddTaskScreen = ({ navigation }) => {
 
-  // button tap handler
-  const handleButtonPress = () => {
-    // saving to local storage
-    //AsyncStorage.setItem('Artur', 'Vika');
+  // state to store input texts: getter/setter
+  // getter() --> return; setter(setValue) --> void
+  const [inputText, setInputText] = useState('');
 
-    console.log('>>> navigate back to Home screen');
+  const handleUserInput = (text: string) => {
+    // update inputText state as user types
+    setInputText(text);
+  };
+
+  // 'Save' button tap
+  const handleSaveNewTask = () => {
+    // saving to local storage
+    //TODO: change 'key' to unique integer value
+    AsyncStorage.setItem(inputText, inputText);
+
     navigation.navigate('Home');
   }
 
@@ -23,8 +32,9 @@ const AddTaskScreen = ({ navigation }) => {
         placeholder="Enter task title"
         placeholderTextColor="#999999"
         keyboardType="default"
+        onChangeText={handleUserInput}
       />
-      <CustomButton text='Save' onPress={handleButtonPress} />
+      <CustomButton text='Save' onPress={handleSaveNewTask} />
     </View>
   );
 };
