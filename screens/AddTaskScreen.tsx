@@ -10,6 +10,11 @@ const AddTaskScreen = ({ navigation }) => {
   // getter() --> return; setter(setValue) --> void
   const [inputText, setInputText] = useState('');
 
+
+  // **************************************
+  // *********** event handlers ***********
+  // **************************************
+
   const handleUserInput = (text: string) => {
     // update inputText state as user types
     setInputText(text);
@@ -17,10 +22,8 @@ const AddTaskScreen = ({ navigation }) => {
 
   // 'Save' button tap
   const handleSaveNewTask = () => {
-    // saving to local storage
     //TODO: change 'key' to unique integer value
     AsyncStorage.setItem(inputText, inputText);
-
     navigation.navigate('Home');
   }
 

@@ -11,11 +11,13 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     console.log('<<< Home screen before loading >>>');
     fetchDataFromAsyncStorage();
-  }, []);
+  }, [tasks]); //TODO: check re-rendering every second
 
   // read from AsyncStorage db
   const fetchDataFromAsyncStorage = async () => {
     try {
+      //await AsyncStorage.clear();
+      console.log(await AsyncStorage.getAllKeys());
       const storedData = await AsyncStorage.getAllKeys();
       if (storedData !== null) {
         setTasks(storedData);
@@ -24,6 +26,15 @@ const HomeScreen = ({ navigation }) => {
       console.error('Error fetching data:', error);
     }
   };
+
+  // render individual task item
+  function RenderTaskItem({ item }) {
+    return (
+      <View style={styles.taskContainer}>
+        <Text style={styles.task}>{item}</Text>
+      </View>
+    );
+  }
 
 
   // **************************************
@@ -42,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <FlatList
         data={tasks}
-        renderItem={({ item }) => <Text style={styles.task}>{item}</Text>}
+        renderItem={({ item }) => <RenderTaskItem  item={item} /> }
         keyExtractor={(item, index) => index.toString()}
       />
       <CustomButton text='Add Task' onPress={handleButtonPress} />
@@ -53,9 +64,21 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
     alignItems: 'center',
     borderColor: 'black',
     backgroundColor: 'pink',
+  },
+  taskContainer: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginVertical: 5,
+    minWidth: 350,
+    borderRadius: 8,
+    shadowColor: 'grey',
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    //elevation: 5,
   },
   task: {
     fontSize: 20,
