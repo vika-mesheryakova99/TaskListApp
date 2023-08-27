@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../components/PrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // functional component for screen
@@ -28,7 +28,6 @@ const AddTaskScreen = ({ navigation }) => {
 
     //TODO: change 'key' to unique integer value
     await AsyncStorage.setItem(inputText, inputText);
-
     navigation.navigate('Home');
   }
 

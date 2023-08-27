@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import CustomButton from '../components/CustomButton';
+import { useFocusEffect } from '@react-navigation/native';
+import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // functional component for screen
@@ -8,20 +10,19 @@ const HomeScreen = ({ navigation }) => {
 
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    console.log('<<< Home screen before loading >>>');
-    fetchDataFromAsyncStorage();
-  }, []); //TODO: check re-rendering every second
+  // refresh data when screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchDataFromAsyncStorage();
+    }, [])
+  );
 
   // read from AsyncStorage db
   const fetchDataFromAsyncStorage = async () => {
-    console.info('********');
     try {
-      //await AsyncStorage.clear();
       //console.log(await AsyncStorage.getAllKeys());
       const storedData = await AsyncStorage.getAllKeys();
       if (storedData !== null) {
-        //const parsedTodos = JSON.parse(storedData);
         console.info(storedData);
         setTasks(storedData);
       }
@@ -44,10 +45,15 @@ const HomeScreen = ({ navigation }) => {
   // *********** event handlers ***********
   // **************************************
   
-  // button tap handler
-  const handleButtonPress = async () => {
-
+  // add new task button handler
+  const handleAddNewTask = async () => {
     console.log('>>> navigate Add Task screen');
+    navigation.navigate('AddTask');
+  }
+
+  // clear all tasks from AsyncStorage
+  const handleClearAllTasks = async () => {
+    await AsyncStorage.clear();
     navigation.navigate('AddTask');
   }
 
@@ -59,7 +65,8 @@ const HomeScreen = ({ navigation }) => {
         renderItem={({ item }) => <RenderTaskItem  item={item} /> }
         keyExtractor={(item, index) => index.toString()}
       />
-      <CustomButton text='Add Task' onPress={handleButtonPress} />
+      <PrimaryButton text='Add Task' onPress={handleAddNewTask} />
+      <SecondaryButton text='Clear' onPress={handleClearAllTasks} />
     </View>
   );
 };
