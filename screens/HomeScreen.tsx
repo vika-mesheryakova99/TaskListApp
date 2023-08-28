@@ -97,7 +97,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   taskContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFEFDF',
+    borderColor: 'grey',
+    borderWidth: 1,
     padding: 10,
     marginVertical: 5,
     minWidth: 320,
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     shadowColor: 'grey',
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    //elevation: 5,
+    justifyContent: 'center'
   },
   task: {
     fontSize: 20,

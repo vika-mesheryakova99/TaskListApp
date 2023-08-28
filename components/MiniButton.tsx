@@ -11,11 +11,12 @@ const MiniButton = ({text, onPress}) => {
   
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'red',
+        backgroundColor: '#FF6B6B',
         padding: 10,
         margin: 10,
-        borderRadius: 30,
-        minWidth: 50,
+        borderRadius: 10,
+        width: 50,
+        height: 50,
         alignItems: 'center',
         borderColor: 'white',
         borderWidth: 2,

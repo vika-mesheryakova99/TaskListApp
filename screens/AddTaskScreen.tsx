@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
-import CustomButton from '../components/PrimaryButton';
+import PrimaryButton from '../components/PrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // functional component for screen
@@ -41,7 +41,7 @@ const AddTaskScreen = ({ navigation }) => {
         keyboardType="default"
         onChangeText={handleUserInput}
       />
-      <CustomButton text='Save' onPress={handleSaveNewTask} />
+      <PrimaryButton text='Save' onPress={handleSaveNewTask} />
     </View>
   );
 };
