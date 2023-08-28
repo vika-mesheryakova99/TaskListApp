@@ -1,7 +1,9 @@
 This is a simple "Todo List Application" [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+<div style="display: flex;">
 <img src="./images/app_screenshot.png" alt="Image" width="200" style="max-width:100%;"/>
 <img src="./images/app_screenshot2.png" alt="Image" width="200" style="max-width:100%;"/>
+</div>
 
 # Getting Started
 
