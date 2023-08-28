@@ -2,7 +2,6 @@ import React, {useState, useCallback} from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import PrimaryButton from '../components/PrimaryButton';
-import SecondaryButton from '../components/SecondaryButton';
 import MiniButton from '../components/MiniButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +13,7 @@ const HomeScreen = ({ navigation }) => {
   // refresh data when screen gains focus
   useFocusEffect(
     useCallback(() => {
+      //AsyncStorage.clear(); // removed ALL
       fetchDataFromAsyncStorage();
     }, [])
   );
@@ -21,11 +21,21 @@ const HomeScreen = ({ navigation }) => {
   // read from AsyncStorage db
   const fetchDataFromAsyncStorage = async () => {
     try {
-      const storedData = await AsyncStorage.getAllKeys();
-      if (storedData !== null) {
-        setTasks(storedData);
-        console.info(await AsyncStorage.getAllKeys());
-      }
+      // ["1693202679932", "1693203480391"]
+      const readyOnlyKeys = await AsyncStorage.getAllKeys(); // time-stamps
+
+      // copying read-only array into mutable array
+      // sorting array and reversing its order
+      const sortedKeys = [...readyOnlyKeys].sort().reverse();
+
+      // [["1693202679932", "T1"], ["1693203480391", "T2"]]
+      const pairs = await AsyncStorage.multiGet(sortedKeys)
+
+      // extracting 'titles' from pairs of key-value
+      // ["T1", "T2"]
+      const titles = pairs.map(pair => pair[1]);
+      setTasks(titles);
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }

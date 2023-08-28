@@ -8,7 +8,7 @@ const AddTaskScreen = ({ navigation }) => {
 
   // state to store input texts: getter/setter
   // getter() --> return; setter(setValue) --> void
-  const [inputText, setInputText] = useState('');
+  const [taskTitle, setTaskTitle] = useState('');
 
 
   // **************************************
@@ -16,18 +16,20 @@ const AddTaskScreen = ({ navigation }) => {
   // **************************************
 
   const handleUserInput = (text: string) => {
-    // update inputText state as user types
-    setInputText(text);
+    // update taskTitle state as user types
+    setTaskTitle(text);
   };
 
   // 'Save' button tap
   const handleSaveNewTask = async () => {
-    if (inputText === '') {
+    if (taskTitle === '') {
       return;
     }
 
-    //TODO: change 'key' to unique integer value
-    await AsyncStorage.setItem(inputText, inputText);
+    // [["Task 2", "ART_VALUE"], ["Task 1", "ART_VALUE"]]
+
+    // [key: timeStamp, value: taskTitle]
+    await AsyncStorage.setItem(Date.now().toString(), taskTitle);
     navigation.navigate('Home');
   }
 
