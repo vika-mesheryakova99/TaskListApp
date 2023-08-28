@@ -31,10 +31,7 @@ const HomeScreen = ({ navigation }) => {
       // [["1693202679932", "T1"], ["1693203480391", "T2"]]
       const pairs = await AsyncStorage.multiGet(sortedKeys)
 
-      // extracting 'titles' from pairs of key-value
-      // ["T1", "T2"]
-      const titles = pairs.map(pair => pair[1]);
-      setTasks(titles);
+      setTasks(pairs);
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -46,9 +43,9 @@ const HomeScreen = ({ navigation }) => {
     return (
       <View style={styles.rowContainer}>
         <View style={styles.taskContainer}>
-          <Text style={styles.task}>{item}</Text>
+          <Text style={styles.task}>{item[1]}</Text>
         </View>
-        <MiniButton text=' - ' onPress={() => handleRemoveTask(item)} />
+        <MiniButton text=' - ' onPress={() => handleRemoveTask(item[0])} />
       </View>
     );
   }
