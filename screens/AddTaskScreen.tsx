@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-simple-toast';
 
 // functional component for screen
 const AddTaskScreen = ({ navigation }) => {
@@ -23,13 +24,20 @@ const AddTaskScreen = ({ navigation }) => {
   // 'Save' button tap
   const handleSaveNewTask = async () => {
     if (taskTitle === '') {
+      Toast.showWithGravity('Task title cannot be empty...', 
+      Toast.SHORT, Toast.CENTER, 
+      { backgroundColor: 'red', textColor: 'white'});
+      
       return;
     }
 
-    // [["Task 2", "ART_VALUE"], ["Task 1", "ART_VALUE"]]
-
     // [key: timeStamp, value: taskTitle]
+    // [["Task 2", "ART_VALUE"], ["Task 1", "ART_VALUE"]]
     await AsyncStorage.setItem(Date.now().toString(), taskTitle);
+
+    Toast.showWithGravity('Task was added', 
+    Toast.SHORT, Toast.CENTER, 
+    { backgroundColor: 'green', textColor: 'white'});
     navigation.navigate('Home');
   }
 

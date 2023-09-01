@@ -10,7 +10,7 @@ function App(): JSX.Element {
 
   const CustomHeaderTitle = ({ title }) => {
     return (
-      <Text style={{ fontSize: 25, color: 'black', fontWeight: 'bold' }}>{title}</Text>
+      <Text style={styles.screenTitle}>{title}</Text>
     );
   };
 
@@ -35,7 +35,7 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-
+  screenTitle: { fontSize: 25, color: 'black', fontWeight: 'bold', alignContent: 'center' }
 });
 
 export default App;
