@@ -38,6 +38,12 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  const EmptyListContent = () => {
+    return (
+      <Text style={styles.noTasksText}>You all caught up</Text>
+    );
+  };
+
   // render individual task item
   function RenderTaskItem({ item }) {
     return (
@@ -85,6 +91,7 @@ const HomeScreen = ({ navigation }) => {
         data={tasks}
         renderItem={({ item }) => <RenderTaskItem  item={item} /> }
         keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={EmptyListContent}
       />
       <PrimaryButton text='Add Task' onPress={handleAddNewTask} />
       {/* <SecondaryButton text='Clear' onPress={handleClearAllTasks} /> */}
@@ -119,6 +126,11 @@ const styles = StyleSheet.create({
   task: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  noTasksText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'grey',
   }
 });
 
