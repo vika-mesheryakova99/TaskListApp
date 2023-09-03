@@ -1,20 +1,35 @@
 import React, {useState, useCallback} from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import PrimaryButton from '../components/PrimaryButton';
 import MiniButton from '../components/MiniButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {capitalizeWords} from '../utils/stringUtils'
+
+// WeatherAPI response object
+type WeatherResponse = {
+  title: string,
+  description: string;
+  temperature: number;
+  city: string;
+  country: string;
+};
 
 // functional component for screen
 const HomeScreen = ({ navigation }) => {
 
   const [tasks, setTasks] = useState([]);
+  const [weather, setWeather] = useState<WeatherResponse>(
+    { title: '', description: '', temperature: 0, city: '', country: '' });
 
   // refresh data when screen gains focus
   useFocusEffect(
     useCallback(() => {
+      fetchWeatherData('Tashkent');
+      
       //AsyncStorage.clear(); // removed ALL
       fetchDataFromAsyncStorage();
+
     }, [])
   );
 
@@ -38,9 +53,40 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
+  // get weather
+  const fetchWeatherData = (city: string) => {
+    const apiKey = '165fd282f55a4d169a1bbcd90c571cfe';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    console.info('Fetching Weather API...')
+    fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Could not query WeatherAPI: network error.');
+      }
+      
+      return response.json();
+    })
+    .then((data) => {
+      console.info('Server response JSON: ', data);
+
+      const weatherResponse: WeatherResponse = {
+        title: data.weather[0].main,
+        temperature: data.main.temp,
+        description: data.weather[0].description,
+        city: data.name,
+        country: data.sys.country,
+      };
+      setWeather(weatherResponse);
+    })
+    .catch((error) => {
+      console.error('Error fetching weather data:', error);
+    });
+  }
+
   const EmptyListContent = () => {
     return (
-      <Text style={styles.noTasksText}>You all caught up</Text>
+      <Text style={styles.noTasksText}>No tasks for today</Text>
     );
   };
 
@@ -87,6 +133,25 @@ const HomeScreen = ({ navigation }) => {
   // render function
   return (
     <View style={styles.container}>
+      <View style={styles.weatherContainer}>
+        <View style={styles.weatherTextContainer} >
+          <Text style={styles.weatherText}>{capitalizeWords(weather.description)}</Text>
+          <Text style={styles.weatherText}>{weather.temperature.toFixed(1)} °C</Text>
+          <Text style={styles.weatherText}>{weather.city}, {weather.country}</Text>
+        </View>
+        <View>
+          {weather.title.toLowerCase() === 'clear' ? 
+          (<Image source={require('../assets/images/sun.png')} style={styles.weatherIcon} />) : null}
+          {weather.title.toLowerCase() === 'clouds' ? 
+          (<Image source={require('../assets/images/clouds.png')} style={styles.weatherIcon} />) : null}
+          {weather.title.toLowerCase() === 'rain' ? 
+          (<Image source={require('../assets/images/rain.png')} style={styles.weatherIcon} />) : null}
+          {weather.title.toLowerCase() === 'snow' ? 
+          (<Image source={require('../assets/images/snow.png')} style={styles.weatherIcon} />) : null}
+          {weather.title.toLowerCase() === 'wind' ? 
+          (<Image source={require('../assets/images/wind.png')} style={styles.weatherIcon} />) : null}
+        </View>
+      </View>
       <FlatList
         data={tasks}
         renderItem={({ item }) => <RenderTaskItem  item={item} /> }
@@ -131,6 +196,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'grey',
+  },
+  weatherContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  weatherTextContainer: {
+    flexDirection: 'column', 
+    paddingRight: 40
+  },
+  weatherText: {
+    fontSize: 18,
+    fontStyle: 'italic',
+    color: 'black',
+  },
+  weatherIcon: { 
+    width: 60, 
+    height: 60, 
+    backgroundColor: 'white',
   }
 });
 
