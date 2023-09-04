@@ -10,9 +10,8 @@ import {capitalizeWords} from '../utils/stringUtils';
 type WeatherResponse = {
   title: string;
   description: string;
-  temperature: number;
-  city: string;
-  country: string;
+  temperature: string;
+  location: string;
 };
 
 // functional component for screen
@@ -21,9 +20,8 @@ const HomeScreen = ({navigation}) => {
   const [weather, setWeather] = useState<WeatherResponse>({
     title: '',
     description: '',
-    temperature: 0,
-    city: '',
-    country: '',
+    temperature: '',
+    location: '',
   });
 
   // refresh data when screen gains focus
@@ -70,14 +68,13 @@ const HomeScreen = ({navigation}) => {
         return response.json();
       })
       .then(data => {
-        console.info('Server response JSON: ', data);
+        console.info('WeatherAPI response JSON: ', data);
 
         const weatherResponse: WeatherResponse = {
           title: data.weather[0].main,
-          temperature: data.main.temp,
+          temperature: `${data.main.temp.toFixed(1)} °C`,
           description: data.weather[0].description,
-          city: data.name,
-          country: data.sys.country,
+          location: `${data.name}, ${data.sys.country}`,
         };
         setWeather(weatherResponse);
       })
@@ -137,12 +134,8 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.weatherText}>
             {capitalizeWords(weather.description)}
           </Text>
-          <Text style={styles.weatherText}>
-            {weather.temperature.toFixed(1)} °C
-          </Text>
-          <Text style={styles.weatherText}>
-            {weather.city}, {weather.country}
-          </Text>
+          <Text style={styles.weatherText}>{weather.temperature}</Text>
+          <Text style={styles.weatherText}>{weather.location}</Text>
         </View>
         <View>
           {weather.title.toLowerCase() === 'clear' ? (
