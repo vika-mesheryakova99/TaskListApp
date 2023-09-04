@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text } from 'react-native';
+import React, {useState} from 'react';
+import {View, TextInput, StyleSheet, Text} from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-simple-toast';
 
 // functional component for screen
-const AddTaskScreen = ({ navigation }) => {
-
+const AddTaskScreen = ({navigation}) => {
   // state to store input texts: getter/setter
   // getter() --> return; setter(setValue) --> void
   const [taskTitle, setTaskTitle] = useState('');
-
 
   // **************************************
   // *********** event handlers ***********
@@ -24,10 +22,13 @@ const AddTaskScreen = ({ navigation }) => {
   // 'Save' button tap
   const handleSaveNewTask = async () => {
     if (taskTitle === '') {
-      Toast.showWithGravity('Task title cannot be empty...', 
-      Toast.SHORT, Toast.CENTER, 
-      { backgroundColor: 'red', textColor: 'white'});
-      
+      Toast.showWithGravity(
+        'Task title cannot be empty...',
+        Toast.SHORT,
+        Toast.CENTER,
+        {backgroundColor: 'red', textColor: 'white'},
+      );
+
       return;
     }
 
@@ -35,11 +36,12 @@ const AddTaskScreen = ({ navigation }) => {
     // [["Task 2", "ART_VALUE"], ["Task 1", "ART_VALUE"]]
     await AsyncStorage.setItem(Date.now().toString(), taskTitle);
 
-    Toast.showWithGravity('Task was added', 
-    Toast.SHORT, Toast.CENTER, 
-    { backgroundColor: 'green', textColor: 'white'});
+    Toast.showWithGravity('Task was added', Toast.SHORT, Toast.CENTER, {
+      backgroundColor: 'green',
+      textColor: 'white',
+    });
     navigation.navigate('Home');
-  }
+  };
 
   // render function
   return (
@@ -51,7 +53,7 @@ const AddTaskScreen = ({ navigation }) => {
         keyboardType="default"
         onChangeText={handleUserInput}
       />
-      <PrimaryButton text='Save' onPress={handleSaveNewTask} />
+      <PrimaryButton text="Save" onPress={handleSaveNewTask} />
     </View>
   );
 };
@@ -76,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTaskScreen; 
+export default AddTaskScreen;
